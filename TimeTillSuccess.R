@@ -22,7 +22,7 @@ boxplot(time.till.success, col="lightcoral", ylab="Years")
 dev.off()
 
 #Visualize Distribution through Density Plot
-png("histogram.png", width=650)
+png("density.png", width=650)
 par(mar=c(3, 4, 3, 4), family='avenir', cex.axis=.95)
 plot(density(time.till.success), ylim=c(0, 0.4), main="Time Till Success Plot")
 polygon(density(time.till.success), col="lightcoral", border="black")
