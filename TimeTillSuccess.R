@@ -1,14 +1,15 @@
-library(dplyr)
-library(ggplot2)
 library(data.table)
 
 #Retrieve raw data from the APA's philjobs.org website
 raw.data <- fread('https://philjobs.org/appointments/csvPlacements')
 
-#Subset the data by removing rows that are missing 'Year of PhD' data, that are non-tenure-track entries, that are promotion entries (e.g. promoted to Associate Prof.), and that mark a TT job before completing PhD
-subset.data <- raw.data[ (raw.data$'year of phd'!= "") & (raw.data$type == "Tenured/Tenure-Track") & (raw.data$'job title' == "Assistant Professor") & (raw.data$year - raw.data$'year of phd' >= 0) ]
+#Subset the data by removing rows that are non-tenure-track entries, promotion entries 
+#(e.g. promoted to Associate Prof.), mark a TT job before completing PhD
+subset.data <- raw.data[(raw.data$type == "Tenured/Tenure-Track") & 
+                        (raw.data$'job title' == "Assistant Professor") & 
+                        (raw.data$year - raw.data$'year of phd' >= 0) ]
 
-#Find the number of years between completing a PhD and securing a TT job
+#Difference in years from completing a PhD and securing a TT job
 time.till.success <- subset.data$year - subset.data$'year of phd'
 
 summary(time.till.success)
