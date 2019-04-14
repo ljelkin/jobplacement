@@ -34,4 +34,4 @@ However, some grads from certain programs seem to do better than others.
 
 In sum, prospective students should not only consider their prospects for landing a TT job after obtaining a Ph.D. in philosophy, but also the number of years they might have to endure in temporary jobs.
 
-(Note: Some programs had very few entries. This is especially true for programs outside of the US, e.g., Cambridge. A few only had one entry (Carnegie Mellon, Miami, and UCL) and so they were removed.)
+(Note: Some programs had very few entries. This is especially true for programs outside of the US, e.g., Cambridge. A few only had one entry (Carnegie Mellon, Miami, and UCL) and so they were excluded.)
