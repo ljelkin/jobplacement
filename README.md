@@ -1,6 +1,6 @@
 # How long does it take to get a tenure-track job in academic philosophy? 
 
-*Surprisingly, less than 2-years! And slightly less than the average time for grads from the top program (see below)* 
+*Surprisingly, less than 2-years! And slightly less than the average time for grads from the top programs (see below)* 
 
 Here's a summary of data from philjobs.org:
 
