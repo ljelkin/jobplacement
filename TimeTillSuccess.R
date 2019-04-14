@@ -1,38 +1,34 @@
+library(sqldf)
 library(data.table)
 
-#Retrieve raw data from the APA's philjobs.org website
-raw.data <- fread('https://philjobs.org/appointments/csvPlacements')
+#Load data from APA's philjobs.org website
+data <- fread('https://philjobs.org/appointments/csvPlacements')
 
-#Subset the data by removing rows that are non-tenure-track entries, promotion entries 
-#(e.g. promoted to Associate Prof.), mark a TT job before completing PhD
-subset.data <- raw.data[(raw.data$type == "Tenured/Tenure-Track") & 
-                        (raw.data$'job title' == "Assistant Professor") & 
-                        (raw.data$year - raw.data$'year of phd' >= 0) ]
+#Remove entries that are non-tenure-track, promotion (e.g. promoted to Associate), TT job before completing PhD
+df_sql <- sqldf("SELECT * FROM data WHERE (type='Tenured/Tenure-Track') AND (`job title`='Assistant Professor') AND ((year-`year of phd`) >= 0)")
 
-#Difference in years from completing a PhD and securing a TT job
-time.till.success <- subset.data$year - subset.data$'year of phd'
+#Years between completing a PhD and securing a TT position + summary
+success <- df_sql$year-df_sql$'year of phd'
+summary(success)
 
-summary(time.till.success)
-
-#Visualize distribution through Boxplot
-quartzFonts(avenir = c("Avenir Book", "Avenir Black", "Avenir Book Oblique",
-                       "Avenir Black Oblique"))
-png("boxplot.png", width=650)
+#Visualize success in boxplot
+quartzFonts(avenir=c('Avenir Book', 'Avenir Black', 'Avenir Book Oblique', 'Avenir Black Oblique'))
+png('boxplot.png', width=650)
 par(mar=c(3, 4, 3, 4), family='avenir', cex.axis=.95)
-boxplot(time.till.success, col="lightcoral", ylab="Years")
+boxplot(success, col='lightcoral', ylab='Years')
 dev.off()
 
-#Visualize Distribution through Density Plot
-png("density.png", width=650)
+#Visualize success in densityplot
+png('density.png', width=650)
 par(mar=c(3, 4, 3, 4), family='avenir', cex.axis=.95)
-plot(density(time.till.success), ylim=c(0, 0.4), main="Time Till Success Plot")
-polygon(density(time.till.success), col="lightcoral", border="black")
+plot(density(success), ylim=c(0, 0.4), main='Time Till Success Plot')
+polygon(density(success), col='lightcoral', border='black')
 dev.off()
 
-#Find Confidence Interval for Time.Till.Success
-stand.deviation <- sd(time.till.success)
+#Confidence Interval for success
+stand.deviation <- sd(success)
 stand.deviation
-margin.error <- qnorm(0.975) * (stand.deviation / sqrt(length(time.till.success)))
+margin.error <- qnorm(0.975)*(stand.deviation/sqrt(length(success)))
 margin.error
-mean(time.till.success) - margin.error
-mean(time.till.success) + margin.error
+mean(success)-margin.error
+mean(success)+margin.error
